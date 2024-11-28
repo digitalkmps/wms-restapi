@@ -4,17 +4,17 @@ import { StationInfoEntity } from './entities/station-info.entity';
 @Injectable()
 export class StationInfoService {
   stationInfo: { [key: string]: StationInfoEntity } = {
-    wms1: {
+    22: {
       latitude: 42.14492,
       longitude: 24.75032,
       description: 'Station for water level monitoring',
     },
-    wms2: {
+    23: {
       latitude: 42.14492,
       longitude: 24.75032,
       description: 'Station for water level monitoring',
     },
-    wms3: {
+    24: {
       latitude: 42.14492,
       longitude: 24.75032,
       description: 'Station for water level monitoring',

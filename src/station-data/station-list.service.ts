@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class StationListService {
-  stations: string[] = ['wms1', 'wms2', 'wms3'];
+  stations: number[] = [22, 23, 24];
 
-  getStationList(): string[] {
+  getStationList(): number[] {
     return this.stations;
   }
 }

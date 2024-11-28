@@ -1,7 +1,7 @@
 export class StationData {
-  timestamp: number;
+  eventTime: number;
   temperature: number;
   humidity: number;
   distance: number;
-  daylight: boolean;
+  light: boolean;
 }
