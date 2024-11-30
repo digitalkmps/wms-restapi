@@ -14,6 +14,7 @@ import {
 import { HttpService } from '@nestjs/axios';
 import { AxiosError, AxiosResponse } from 'axios';
 import { CreateStationDataDto } from './dto/create-station-data.dto';
+import { StationConfigService } from './station-config.service';
 
 @Injectable()
 export class StationDataService {
@@ -37,11 +38,15 @@ export class StationDataService {
   constructor(
     private readonly stationListService: StationListService,
     private readonly httpService: HttpService,
+    private readonly configService: StationConfigService,
   ) {
     this.syncStationData();
   }
 
-  sendGetRequest(url: string): Observable<AxiosResponse<CreateStationDataDto>> {
+  sendGetRequest(
+    stationId: number,
+  ): Observable<AxiosResponse<CreateStationDataDto>> {
+    const url = this.configService.getWMSCoreUrl(stationId);
     return this.httpService.get<CreateStationDataDto>(url);
   }
 
@@ -52,9 +57,7 @@ export class StationDataService {
           from(this.stations).pipe(
             delay(2000),
             concatMap((statiton) =>
-              this.sendGetRequest(
-                `http://192.168.1.50:17345/data/${statiton}`,
-              ).pipe(
+              this.sendGetRequest(statiton).pipe(
                 map(({ data }) => data),
                 catchError((error: AxiosError) => {
                   this.logger.error(error.response.data);
