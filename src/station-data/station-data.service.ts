@@ -93,6 +93,10 @@ export class StationDataService {
     return this.stationList[id];
   }
 
+  findLastOne(id: string): StationData {
+    return this.stationList[id][this.stationList[id].length - 1];
+  }
+
   remove(id: number) {
     return `This action removes a #${id} stationDatum`;
   }
