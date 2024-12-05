@@ -51,7 +51,7 @@ export class StationDataService {
   }
 
   syncStationData() {
-    interval(1000)
+    interval(60000)
       .pipe(
         concatMap(() =>
           from(this.stations).pipe(
