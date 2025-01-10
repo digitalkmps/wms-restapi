@@ -6,10 +6,12 @@ import {
   catchError,
   concatMap,
   delay,
+  filter,
   from,
   interval,
   map,
   Observable,
+  startWith,
 } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -53,14 +55,16 @@ export class StationDataService {
   syncStationData() {
     interval(60000)
       .pipe(
+        startWith(0),
         concatMap(() =>
           from(this.stations).pipe(
             delay(2000),
             concatMap((statiton) =>
               this.sendGetRequest(statiton).pipe(
+                filter((e) => !!e.data),
                 map(({ data }) => data),
                 catchError((error: AxiosError) => {
-                  this.logger.error(error.response.data);
+                  this.logger.error(error.response);
                   throw 'Lost connection to wms-core';
                 }),
               ),
